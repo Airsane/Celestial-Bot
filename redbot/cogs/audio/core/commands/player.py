@@ -11,7 +11,7 @@ from red_commons.logging import getLogger
 
 from lavalink import NodeNotFound
 
-from redbot.core import commands
+from redbot.core import commands, app_commands
 from redbot.core.commands import UserInputOptional
 from redbot.core.i18n import Translator
 from redbot.core.utils import AsyncIter
@@ -32,10 +32,10 @@ _ = Translator("Audio", Path(__file__))
 
 
 class PlayerCommands(MixinMeta, metaclass=CompositeMetaClass):
-    @commands.command(name="play")
-    @commands.guild_only()
-    @commands.bot_has_permissions(embed_links=True)
-    async def command_play(self, ctx: commands.Context, *, query: str):
+    @app_commands.command(name="play")
+    @app_commands.guild_only()
+    @app_commands.describe(channel="The channel you want to mention")
+    async def play(self, interaction: discord.Interaction):
         """Play the specified track or search for a close match.
 
         To play a local track, the query should be `<parentfolder>\\<filename>`.
